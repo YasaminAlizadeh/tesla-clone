@@ -6,6 +6,11 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  overflow: hidden;
+}
+
 :root {
   --font-family: "Montserrat", sans-serif;
 }
