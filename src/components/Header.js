@@ -9,17 +9,17 @@ function Header() {
         <TeslaLogo />
       </Logo>
       <NavigationBar>
-        <a href="#">Model S</a>
-        <a href="#">Model 3</a>
-        <a href="#">Model X</a>
-        <a href="#">Model Y</a>
-        <a href="#">Solar Roof</a>
-        <a href="#">Solar Panels</a>
+        <a href="/#">Model S</a>
+        <a href="/#">Model 3</a>
+        <a href="/#">Model X</a>
+        <a href="/#">Model Y</a>
+        <a href="/#">Solar Roof</a>
+        <a href="/#">Solar Panels</a>
       </NavigationBar>
       <Links>
-        <a href="#">Shop</a>
-        <a href="#">Account</a>
-        <a href="#">Menu</a>
+        <a href="/#">Shop</a>
+        <a href="/#">Account</a>
+        <a href="/#">Menu</a>
       </Links>
     </Container>
   );
@@ -33,7 +33,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.7em 0.5em 0 2.7em;
+  padding: 0.7em 2em 0 2.7em;
   font-family: var(--font-family);
 `;
 
@@ -47,6 +47,7 @@ const Logo = styled.div`
 
 const NavigationBar = styled.nav`
   display: flex;
+  gap: 0.5em;
 
   a {
     display: flex;
@@ -56,7 +57,7 @@ const NavigationBar = styled.nav`
     font-weight: 600;
     color: #171a20;
     text-decoration: none;
-    padding: 0.5em 0.75em;
+    padding: 0.5em 0.85em;
     border-radius: 12px;
     transition: background-color 0.5s ease-in-out;
 
