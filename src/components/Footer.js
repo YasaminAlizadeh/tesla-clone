@@ -4,7 +4,6 @@ import styled from "styled-components";
 function Footer() {
   return (
     <Container>
-      <h1>Hello</h1>
       {links.map((element) => (
         <a href={element.link} key={`${element.title}_${new Date().getTime()}`}>
           {element.title}
@@ -17,7 +16,7 @@ function Footer() {
 export default Footer;
 
 const Container = styled.div`
-  height: 100vh;
+  color: black;
 `;
 
 const links = [
