@@ -66,8 +66,6 @@ function Home() {
         element.style.opacity = 0;
       });
     }
-
-    console.log(currentOpacity);
   };
 
   useEffect(() => {
