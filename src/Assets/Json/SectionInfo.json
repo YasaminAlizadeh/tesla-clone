@@ -1,0 +1,77 @@
+[
+  {
+    "id": "model-3",
+    "title": "Model 3",
+    "description": {
+      "text": "Order Online for ",
+      "link_title": "Touchless Delivery",
+      "link_URL": "https://www.tesla.com/support/taking-delivery?redirect=no"
+    },
+    "backgroundImg": "Model3",
+    "leftBtn": "Custom order",
+    "rightBtn": "Existing Inventory",
+    "bouncingBtn": true
+  },
+  {
+    "id": "model-y",
+    "title": "Model Y",
+    "description": {
+      "text": "Order Online for ",
+      "link_title": "Touchless Delivery",
+      "link_URL": "https://www.tesla.com/support/taking-delivery?redirect=no"
+    },
+    "backgroundImg": "ModelY",
+    "leftBtn": "Custom order",
+    "rightBtn": "Existing Inventory"
+  },
+  {
+    "id": "model-s",
+    "title": "Model S",
+    "description": {
+      "text": "Order Online for ",
+      "link_title": "Touchless Delivery",
+      "link_URL": "https://www.tesla.com/support/taking-delivery?redirect=no"
+    },
+    "backgroundImg": "ModelS",
+    "leftBtn": "Custom order",
+    "rightBtn": "Existing Inventory"
+  },
+  {
+    "id": "model-x",
+    "title": "Model X",
+    "description": {
+      "text": "Order Online for ",
+      "link_title": "Touchless Delivery",
+      "link_URL": "https://www.tesla.com/support/taking-delivery?redirect=no"
+    },
+    "backgroundImg": "ModelX",
+    "leftBtn": "Custom order",
+    "rightBtn": "Existing Inventory"
+  },
+  {
+    "id": "solar-panels",
+    "title": "Solar Panels",
+    "description": {
+      "text": "Lowest Cost Solar Panels in America"
+    },
+    "backgroundImg": "SolarPanels",
+    "leftBtn": "Order now",
+    "rightBtn": "Learn more"
+  },
+  {
+    "id": "solar-roof",
+    "title": "Solar Roof",
+    "description": {
+      "text": "Produce Clean Energy From Your Roof"
+    },
+    "backgroundImg": "SolarRoof",
+    "leftBtn": "Order now",
+    "rightBtn": "Learn more"
+  },
+  {
+    "id": "accessories",
+    "title": "Accessories",
+    "backgroundImg": "Accessories",
+    "leftBtn": "Shop now"
+  }
+]
