@@ -48,6 +48,7 @@ const Wrap = styled.div`
   backdrop-filter: blur(3px);
   opacity: ${(props) => (props.shouldShowMenu ? "1" : "0")};
   visibility: ${(props) => (props.shouldShowMenu ? "visible" : "hidden")};
+  transform: translateZ(0);
   transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
 `;
 
@@ -65,9 +66,10 @@ const MenuContainer = styled.div`
   font-size: 0.8rem;
   font-family: var(--font-family);
   font-weight: 600;
-  transform: ${(props) => (props.shouldShowMenu ? "scaleX(1)" : "scaleX(0)")};
+  transform: ${(props) => (props.shouldShowMenu ? "scaleX(1)" : "scaleX(0)")},
+    translateZ(0);
   transform-origin: right;
-  transition: transform 0.6s ease-in-out;
+  transition: transform 0.3s ease-in-out;
 `;
 
 const CloseButton = styled.div`
@@ -77,6 +79,7 @@ const CloseButton = styled.div`
   align-items: center;
   width: max-content;
   border-radius: 50%;
+  transform: translateZ(0);
   transition: background-color 0.2s ease-in-out;
 
   svg {
@@ -100,6 +103,7 @@ const MenuLinks = styled.div`
     color: #393c41;
     border-radius: 11px;
     text-decoration: none;
+    transform: translateZ(0);
     transition: background-color 0.2s ease-in-out;
   }
 
@@ -123,15 +127,27 @@ const LanguageButton = styled.div`
   }
 
   .language {
+    position: relative;
     width: max-content;
     font-size: 0.7rem;
     font-weight: 500;
-    transition: border-bottom 0.5s ease-in-out, padding-bottom 0.5s ease-in-out;
 
-    &:hover {
-      border-bottom: 2px solid black;
-      padding-bottom: -1px;
-      color: #18191b;
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      visibility: hidden;
+      background-color: #2d2f33;
+      transform: translateZ(0);
+      transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    }
+
+    &:hover::after {
+      opacity: 1;
+      visibility: visible;
     }
   }
 
