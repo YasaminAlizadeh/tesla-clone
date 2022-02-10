@@ -1,23 +1,38 @@
 import React from "react";
 import styled from "styled-components";
-import { DownArrow } from "../Assets/Images";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-function Section({ title, backgroundImg }) {
+function Section({
+  id,
+  title,
+  description,
+  backgroundImg,
+  leftBtn,
+  rightBtn,
+  bouncingBtn,
+}) {
   return (
-    <Container backgroundImg={backgroundImg}>
-      <SectionText>
-        <h2>{title}</h2>
-        <p>
-          Order Online for <a href="#">Touchless Delivery</a>
+    <Container id={id} className="section" backgroundImg={backgroundImg}>
+      <SectionText className="fade">
+        <h2 id="section-title">{title}</h2>
+        <p id="section-description-text">
+          {description.text}
+          <a id="section-description-link" href={description.link_URL}>
+            {description.link_title}
+          </a>
         </p>
       </SectionText>
-      <ButtonGroup>
-        <LeftButton tabIndex="0">Custom Order</LeftButton>
-        <RightButton>Existing Inventory</RightButton>
+      <ButtonGroup className="fade">
+        <LeftButton id="section-leftBtn">{leftBtn}</LeftButton>
+        {rightBtn && (
+          <RightButton id="section-rightBtn">{rightBtn}</RightButton>
+        )}
       </ButtonGroup>
-      <BouncingDownArrow>
-        <DownArrow />
-      </BouncingDownArrow>
+      {bouncingBtn && (
+        <BouncingDownArrow>
+          <ExpandMoreIcon />
+        </BouncingDownArrow>
+      )}
     </Container>
   );
 }
@@ -34,12 +49,14 @@ const Container = styled.section`
   background-image: ${(props) => props.backgroundImg};
   background-size: cover;
   background-position: center;
+  /* scroll-snap-align: center; */
   font-family: var(--font-family);
 `;
 
 const SectionText = styled.div`
   flex: 1;
-  margin-top: calc(16vh + 20px);
+  position: fixed;
+  top: calc(14vh);
   text-align: center;
   color: #393c41;
 
@@ -49,7 +66,8 @@ const SectionText = styled.div`
   }
 
   p {
-    font-size: 14px;
+    font-size: 13px;
+    margin-top: 0.7em;
 
     a {
       color: black;
@@ -65,6 +83,8 @@ const SectionText = styled.div`
 `;
 
 const ButtonGroup = styled.section`
+  position: fixed;
+  bottom: 4em;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -73,16 +93,18 @@ const ButtonGroup = styled.section`
 `;
 
 const LeftButton = styled.a`
-  height: 40px;
-  width: 256px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  width: 240px;
   padding: 1em;
   opacity: 0.85;
   background-color: #171a20;
   color: white;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   text-transform: uppercase;
-  text-align: center;
   border-radius: 32px;
   cursor: pointer;
 `;
@@ -94,7 +116,8 @@ const RightButton = styled(LeftButton)`
 `;
 
 const BouncingDownArrow = styled.div`
-  height: 45px;
+  position: fixed;
+  bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,7 +126,7 @@ const BouncingDownArrow = styled.div`
 
   svg {
     height: 100%;
-    fill: black;
+    fill: #333a47;
   }
 
   @keyframes bouncing {
