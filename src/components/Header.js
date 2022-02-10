@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { TeslaLogo } from "../Assets/Images";
 
-function Header() {
+function Header({ openMenu }) {
   return (
     <Container>
       <Logo>
@@ -19,7 +19,7 @@ function Header() {
       <Links>
         <a href="/#">Shop</a>
         <a href="/#">Account</a>
-        <a href="/#">Menu</a>
+        <button onClick={() => openMenu(true)}>Menu</button>
       </Links>
     </Container>
   );
@@ -74,6 +74,23 @@ const NavigationBar = styled.nav`
 `;
 
 const Links = styled(NavigationBar)`
+  button {
+    padding: 0.5em 0.85em;
+    font-size: 13px;
+    font-family: var(--font-family);
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    background-color: transparent;
+    color: #171a20;
+    transition: background-color 0.5s ease-in-out;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #00000014;
+  }
+
   @media screen and (max-width: 1200px) {
     a:last-child {
       display: flex;
