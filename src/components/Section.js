@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Footer from "./Footer";
 
 function Section({
   id,
@@ -33,6 +34,7 @@ function Section({
           <ExpandMoreIcon />
         </BouncingDownArrow>
       )}
+      {title === "Accessories" && <Footer />}
     </Container>
   );
 }
@@ -84,7 +86,7 @@ const SectionText = styled.div`
 
 const ButtonGroup = styled.section`
   position: fixed;
-  bottom: 4em;
+  bottom: 6em;
   display: flex;
   align-items: center;
   justify-content: center;
