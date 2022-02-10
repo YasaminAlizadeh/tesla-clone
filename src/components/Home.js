@@ -1,39 +1,181 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Section from "./Section";
 import styled from "styled-components";
-import {
-  Model3,
-  ModelS,
-  ModelX,
-  ModelY,
-  SolarPanels,
-  SolarRoof,
-  Accessories,
-} from "../Assets/Images";
+import sectionsInfoData from "../Assets/Json/SectionInfo.json";
+import { bgImages } from "../Assets/Images";
 
 function Home() {
+  const [content, setContent] = useState({
+    title: "",
+    description: {},
+    leftBtn: "",
+    rightBtn: "",
+    bouncingBtn: false,
+  });
+  const [currentSection, setCurrentSection] = useState("model-3");
+  const [sectionHeight, setSectionHeight] = useState(0);
+  const sectionHeightRef = useRef();
+  sectionHeightRef.current = sectionHeight;
+  const [isWindowResized, setIsWindowResized] = useState(false);
+
+  const sectionsInfo = Object.values(sectionsInfoData);
+  const home = useRef();
+
+  /*  Determine which sections are in the viewport while scrolling
+  - To help with smooth scroll */
+  const isAnyPartOfElementInViewport = (element) => {
+    const rect = element.getBoundingClientRect();
+    const windowHeight = window.innerHeight || home.current.clientHeight;
+    const vertInView =
+      rect.top + 5 <= windowHeight && rect.top + rect.height - 5 >= 0;
+
+    return vertInView;
+  };
+
+  // Updating section height value on window resize
+  const updateSectionHeight = (height) => {
+    sectionHeightRef.current = height;
+  };
+
+  // Controling the opacity of texts and buttons on scrolling
+  const controlOpacity = () => {
+    let currentOpacity;
+
+    if (
+      home.current.scrollTop % sectionHeightRef.current <
+      sectionHeightRef.current / 5
+    ) {
+      currentOpacity =
+        1 - (((home.current.scrollTop * 5) / sectionHeightRef.current) % 1);
+
+      [...document.getElementsByClassName("fade")].forEach(
+        (element) => (element.style.opacity = currentOpacity)
+      );
+    } else if (
+      home.current.scrollTop % sectionHeightRef.current >
+      (sectionHeightRef.current * 4) / 5
+    ) {
+      currentOpacity =
+        ((home.current.scrollTop * 5) / sectionHeightRef.current) % 1;
+
+      [...document.getElementsByClassName("fade")].forEach((element) => {
+        element.style.opacity = currentOpacity;
+      });
+    } else {
+      [...document.getElementsByClassName("fade")].forEach((element) => {
+        element.style.opacity = 0;
+      });
+    }
+
+    console.log(currentOpacity);
+  };
+
+  useEffect(() => {
+    const homeCurrent = home.current;
+    const sectionContent = sectionsInfo.find(
+      (element) => element.id === currentSection
+    );
+    setContent({
+      title: sectionContent.title,
+      description: { ...sectionContent.description },
+      leftBtn: sectionContent.leftBtn,
+      rightBtn: sectionContent.rightBtn,
+      bouncingBtn: sectionContent.bouncingBtn,
+    });
+
+    let sections = [...document.getElementsByClassName("section")];
+    sections.length && setSectionHeight(sections[0].offsetHeight);
+
+    let lastScrollTop = 0;
+    const smoothScroll = () => {
+      // Get the direction of Scroll
+      let st = window.pageYOffset || homeCurrent.scrollTop;
+
+      let scrolledSection;
+      if (st > lastScrollTop) {
+        // Scrolling Down
+        scrolledSection = sectionsInfo
+          .filter((element) =>
+            isAnyPartOfElementInViewport(document.getElementById(element.id))
+          )
+          .slice(-1)[0];
+      } else {
+        // upscroll code
+        scrolledSection = sectionsInfo
+          .filter((element) =>
+            isAnyPartOfElementInViewport(document.getElementById(element.id))
+          )
+          .slice(0, 1)[0];
+      }
+      lastScrollTop = st <= 0 ? 0 : st;
+
+      // Set the state to the scrolled section
+      setCurrentSection(scrolledSection.id);
+    };
+
+    window.addEventListener("resize", () => setIsWindowResized(true));
+    homeCurrent.addEventListener("scroll", () => smoothScroll());
+    homeCurrent.addEventListener("scroll", () =>
+      controlOpacity(sectionHeightRef.current)
+    );
+
+    return () => {
+      window.removeEventListener("resize", () => setIsWindowResized(true));
+      homeCurrent.removeEventListener("scroll", () => smoothScroll());
+      homeCurrent.removeEventListener("scroll", () =>
+        controlOpacity(sectionHeightRef.current)
+      );
+    };
+  }, []);
+
+  useEffect(() => {
+    const sectionContent = sectionsInfo.find(
+      (element) => element.id === currentSection
+    );
+    setTimeout(() => {
+      document.getElementById(currentSection).scrollIntoView();
+    }, 200);
+
+    setTimeout(() => {
+      setContent({
+        title: sectionContent.title,
+        description: { ...sectionContent.description },
+        leftBtn: sectionContent.leftBtn,
+        rightBtn: sectionContent.rightBtn,
+        bouncingBtn: sectionContent.bouncingBtn,
+      });
+    }, 500);
+
+    return () => {};
+  }, [currentSection]);
+
+  useEffect(() => {
+    if (isWindowResized) {
+      let sections = [...document.getElementsByClassName("section")];
+      sections.length && setSectionHeight(sections[0].offsetHeight);
+      isWindowResized && updateSectionHeight(sections[0].offsetHeight);
+      setIsWindowResized(false);
+    }
+    return () => {};
+  }, [isWindowResized]);
+
   return (
-    <Container className="container">
-      {sections.map(
-        ({
-          title,
-          description,
-          backgroundImg,
-          leftBtn,
-          rightBtn,
-          bouncingBtn,
-        }) => (
+    <Container ref={home} id="home" home={home}>
+      {sectionsInfo.map(({ id, backgroundImg }) => {
+        return (
           <Section
-            title={title}
-            description={description}
-            backgroundImg={`url(${backgroundImg})`}
-            leftBtn={leftBtn}
-            rightBtn={rightBtn}
-            bouncingBtn={bouncingBtn}
-            key={`${title}_${new Date().getTime()}`}
+            controlOpacity={controlOpacity}
+            id={id}
+            title={content.title}
+            description={content.description}
+            backgroundImg={`url(${bgImages[backgroundImg]})`}
+            leftBtn={content.leftBtn}
+            rightBtn={content.rightBtn}
+            bouncingBtn={content.bouncingBtn}
+            key={`${id}-${new Date().getTime()}`}
           />
-        )
-      )}
+        );
+      })}
     </Container>
   );
 }
@@ -43,57 +185,6 @@ export default Home;
 const Container = styled.div`
   max-height: 100vh;
   overflow-y: scroll;
-  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  /* scroll-snap-type: y mandatory; */
 `;
-
-// ------------------- Sections info -------------------
-const sections = [
-  {
-    title: "Model 3",
-    description: "Order Online for Touchless Delivery",
-    backgroundImg: Model3,
-    leftBtn: "Custom order",
-    rightBtn: "Existing Inventory",
-    bouncingBtn: true,
-  },
-  {
-    title: "Model Y",
-    description: "Order Online for Touchless Delivery",
-    backgroundImg: ModelY,
-    leftBtn: "Custom order",
-    rightBtn: "Existing Inventory",
-  },
-  {
-    title: "Model S",
-    description: "Order Online for Touchless Delivery",
-    backgroundImg: ModelS,
-    leftBtn: "Custom order",
-    rightBtn: "Existing Inventory",
-  },
-  {
-    title: "Model X",
-    description: "Order Online for Touchless Delivery",
-    backgroundImg: ModelX,
-    leftBtn: "Custom order",
-    rightBtn: "Existing Inventory",
-  },
-  {
-    title: "Solar Panels",
-    description: "Lowest Cost Solar Panels in America",
-    backgroundImg: SolarPanels,
-    leftBtn: "Order now",
-    rightBtn: "Learn more",
-  },
-  {
-    title: "Solar Roof",
-    description: "Produce Clean Energy From Your Roof",
-    backgroundImg: SolarRoof,
-    leftBtn: "Order now",
-    rightBtn: "Learn more",
-  },
-  {
-    title: "Accessories",
-    backgroundImg: Accessories,
-    leftBtn: "Shop now",
-  },
-];
