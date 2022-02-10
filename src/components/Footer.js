@@ -16,7 +16,20 @@ function Footer() {
 export default Footer;
 
 const Container = styled.div`
-  color: black;
+  position: absolute;
+  bottom: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: min(2vw, 1em);
+
+  a {
+    font-family: var(--font-family);
+    font-size: min(4vw, 0.7rem);
+    font-weight: 500;
+    text-decoration: none;
+    color: #282a2e;
+  }
 `;
 
 const links = [
