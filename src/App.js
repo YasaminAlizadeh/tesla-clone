@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./App.css";
-import Home from "./Components/Home";
-import Header from "./Components/Header";
-import Menu from "./Components/Menu";
+import Home from "./components/Home";
+import Header from "./components/Header";
+import Menu from "./components/Menu";
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
