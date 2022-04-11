@@ -1,6 +1,7 @@
 {
   "name": "tesla-clone",
   "version": "0.1.0",
+  "homepage": "https://YasaminAlizadeh.github.io/tesla-clone",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.7.1",
@@ -20,7 +21,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -38,6 +41,7 @@
     ]
   },
   "devDependencies": {
-    "file-loader": "^6.2.0"
+    "file-loader": "^6.2.0",
+    "gh-pages": "^3.2.3"
   }
 }
